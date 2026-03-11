@@ -4,418 +4,125 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Questionnaire Projet — Maël Dufour</title>
-  <meta name="description" content="Décrivez votre projet web et recevez un devis personnalisé sous 48h." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --bg: #07070f;
-      --bg-2: #0d0d1a;
-      --bg-card: #10101f;
-      --border: rgba(255,255,255,0.07);
-      --border-focus: rgba(124,58,237,0.6);
-      --purple: #7c3aed;
-      --purple-light: #a855f7;
-      --cyan: #06b6d4;
-      --text: #e2e8f0;
-      --text-muted: #94a3b8;
-      --radius: 14px;
-      --radius-sm: 10px;
+      --bg: #07070f; --bg-2: #0d0d1a; --bg-card: #10101f;
+      --border: rgba(255,255,255,0.07); --border-focus: rgba(124,58,237,0.6);
+      --purple: #7c3aed; --purple-light: #a855f7; --cyan: #06b6d4;
+      --text: #e2e8f0; --text-muted: #94a3b8;
+      --radius: 14px; --radius-sm: 10px;
     }
-
     html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-      line-height: 1.7;
-      min-height: 100vh;
-    }
-
+    body { font-family: 'Space Grotesk', sans-serif; background: var(--bg); color: var(--text); line-height: 1.7; min-height: 100vh; }
     a { text-decoration: none; color: inherit; }
 
-    /* ===== NAV ===== */
     nav {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 24px;
-      height: 70px;
-      border-bottom: 1px solid var(--border);
-      background: rgba(7,7,15,0.9);
-      backdrop-filter: blur(20px);
-      position: sticky;
-      top: 0;
-      z-index: 10;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px; height: 70px; border-bottom: 1px solid var(--border);
+      background: rgba(7,7,15,0.9); backdrop-filter: blur(20px);
+      position: sticky; top: 0; z-index: 10;
     }
-    .logo {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-    }
+    .logo { font-family: 'JetBrains Mono', monospace; font-size: 1.4rem; font-weight: 700; color: #fff; }
     .dot { color: var(--cyan); }
-    .back-link {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      transition: color 0.2s;
-    }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .back-link { display: flex; align-items: center; gap: 6px; font-size: 0.88rem; color: var(--text-muted); transition: color 0.2s; }
     .back-link:hover { color: #fff; }
     .back-link svg { width: 16px; height: 16px; }
+    .lang-toggle {
+      padding: 7px 14px; background: transparent; border: 1px solid var(--border);
+      border-radius: 50px; color: var(--text-muted);
+      font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.05em; cursor: pointer; transition: border-color 0.2s, color 0.2s, background 0.2s;
+    }
+    .lang-toggle:hover { border-color: var(--cyan); color: var(--cyan); background: rgba(6,182,212,0.07); }
 
-    /* ===== LAYOUT ===== */
-    .page {
-      max-width: 760px;
-      margin: 0 auto;
-      padding: 60px 24px 100px;
-    }
-
-    .page-header {
-      text-align: center;
-      margin-bottom: 3rem;
-    }
-    .page-tag {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.15em;
-      color: var(--cyan);
-      margin-bottom: 0.75rem;
-      display: block;
-    }
-    .page-header h1 {
-      font-size: clamp(1.8rem, 5vw, 2.6rem);
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.75rem;
-    }
+    .page { max-width: 760px; margin: 0 auto; padding: 60px 24px 100px; }
+    .page-header { text-align: center; margin-bottom: 3rem; }
+    .page-tag { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: var(--cyan); margin-bottom: 0.75rem; display: block; }
+    .page-header h1 { font-size: clamp(1.8rem, 5vw, 2.6rem); font-weight: 700; color: #fff; margin-bottom: 0.75rem; }
     .page-header p { color: var(--text-muted); font-size: 1rem; max-width: 520px; margin: 0 auto; }
+    .gradient-text { background: linear-gradient(135deg, var(--purple-light), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
 
-    .gradient-text {
-      background: linear-gradient(135deg, var(--purple-light), var(--cyan));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    /* ===== STEPS INDICATOR ===== */
-    .steps-indicator {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0;
-      margin-bottom: 3rem;
-    }
-    .step-dot {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 6px;
-    }
-    .step-dot .dot-circle {
-      width: 36px; height: 36px;
-      border-radius: 50%;
-      border: 2px solid var(--border);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 0.8rem;
-      font-weight: 700;
-      color: var(--text-muted);
-      background: var(--bg-card);
-      transition: all 0.3s;
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .step-dot.active .dot-circle {
-      border-color: var(--purple);
-      background: var(--purple);
-      color: #fff;
-      box-shadow: 0 0 20px rgba(124,58,237,0.4);
-    }
-    .step-dot.done .dot-circle {
-      border-color: var(--cyan);
-      background: rgba(6,182,212,0.15);
-      color: var(--cyan);
-    }
-    .step-dot .dot-label {
-      font-size: 0.7rem;
-      color: var(--text-muted);
-      white-space: nowrap;
-    }
+    .steps-indicator { display: flex; align-items: center; justify-content: center; gap: 0; margin-bottom: 3rem; }
+    .step-dot { display: flex; flex-direction: column; align-items: center; gap: 6px; }
+    .step-dot .dot-circle { width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; font-weight: 700; color: var(--text-muted); background: var(--bg-card); transition: all 0.3s; font-family: 'JetBrains Mono', monospace; }
+    .step-dot.active .dot-circle { border-color: var(--purple); background: var(--purple); color: #fff; box-shadow: 0 0 20px rgba(124,58,237,0.4); }
+    .step-dot.done .dot-circle { border-color: var(--cyan); background: rgba(6,182,212,0.15); color: var(--cyan); }
+    .step-dot .dot-label { font-size: 0.7rem; color: var(--text-muted); white-space: nowrap; }
     .step-dot.active .dot-label { color: var(--purple-light); }
-    .step-line {
-      flex: 1;
-      height: 2px;
-      background: var(--border);
-      max-width: 80px;
-      margin-bottom: 22px;
-      transition: background 0.3s;
-    }
+    .step-line { flex: 1; height: 2px; background: var(--border); max-width: 80px; margin-bottom: 22px; transition: background 0.3s; }
     .step-line.done { background: var(--cyan); }
 
-    /* ===== FORM STEPS ===== */
     .form-step { display: none; }
     .form-step.active { display: block; animation: fadeIn 0.4s ease; }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(16px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* ===== FORM ELEMENTS ===== */
-    .form-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      padding: 2rem;
-      margin-bottom: 1.5rem;
-    }
-    .form-card h2 {
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #fff;
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
+    .form-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 2rem; margin-bottom: 1.5rem; }
+    .form-card h2 { font-size: 1.1rem; font-weight: 600; color: #fff; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
     .form-card h2 svg { width: 20px; height: 20px; color: var(--purple-light); }
 
     .field { margin-bottom: 1.25rem; }
     .field:last-child { margin-bottom: 0; }
-    label {
-      display: block;
-      font-size: 0.88rem;
-      font-weight: 500;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
+    label { display: block; font-size: 0.88rem; font-weight: 500; color: var(--text); margin-bottom: 0.5rem; }
     label .req { color: var(--purple-light); margin-left: 2px; }
 
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 12px 16px;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      color: var(--text);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      outline: none;
-      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
-      -webkit-appearance: none;
-      appearance: none;
+    input[type="text"], input[type="email"], input[type="tel"], select, textarea {
+      width: 100%; padding: 12px 16px; background: rgba(255,255,255,0.04); border: 1px solid var(--border);
+      border-radius: var(--radius-sm); color: var(--text); font-family: 'Space Grotesk', sans-serif;
+      font-size: 0.95rem; outline: none; transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      -webkit-appearance: none; appearance: none;
     }
     input::placeholder, textarea::placeholder { color: var(--text-muted); opacity: 0.6; }
-    input:focus, select:focus, textarea:focus {
-      border-color: var(--border-focus);
-      background: rgba(124,58,237,0.06);
-      box-shadow: 0 0 0 3px rgba(124,58,237,0.1);
-    }
+    input:focus, select:focus, textarea:focus { border-color: var(--border-focus); background: rgba(124,58,237,0.06); box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
     textarea { resize: vertical; min-height: 120px; }
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 14px center;
-      padding-right: 40px;
-      cursor: pointer;
-    }
+    select { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%2394a3b8' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 14px center; padding-right: 40px; cursor: pointer; }
     select option { background: #1a1a2e; color: var(--text); }
 
     .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-
-    /* Checkboxes & Radios */
-    .check-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0.6rem;
-    }
-    .check-item {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-sm);
-      cursor: pointer;
-      transition: border-color 0.2s, background 0.2s;
-      user-select: none;
-    }
+    .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.6rem; }
+    .check-item { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: var(--radius-sm); cursor: pointer; transition: border-color 0.2s, background 0.2s; user-select: none; }
     .check-item:hover { border-color: rgba(124,58,237,0.35); background: rgba(124,58,237,0.06); }
-    .check-item input[type="checkbox"],
-    .check-item input[type="radio"] {
-      width: 16px; height: 16px;
-      accent-color: var(--purple);
-      cursor: pointer;
-      flex-shrink: 0;
-    }
+    .check-item input[type="checkbox"], .check-item input[type="radio"] { width: 16px; height: 16px; accent-color: var(--purple); cursor: pointer; flex-shrink: 0; }
     .check-item span { font-size: 0.88rem; color: var(--text-muted); }
-    .check-item:has(input:checked) {
-      border-color: rgba(124,58,237,0.5);
-      background: rgba(124,58,237,0.1);
-    }
+    .check-item:has(input:checked) { border-color: rgba(124,58,237,0.5); background: rgba(124,58,237,0.1); }
     .check-item:has(input:checked) span { color: var(--text); }
 
-    /* Field hint */
-    .field-hint {
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      margin-top: 0.4rem;
-      opacity: 0.7;
-    }
-
-    /* Error */
-    .field-error {
-      font-size: 0.78rem;
-      color: #f87171;
-      margin-top: 0.4rem;
-      display: none;
-    }
-    .field.has-error input,
-    .field.has-error select,
-    .field.has-error textarea {
-      border-color: rgba(248,113,113,0.5);
-    }
+    .field-hint { font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem; opacity: 0.7; }
+    .field-error { font-size: 0.78rem; color: #f87171; margin-top: 0.4rem; display: none; }
+    .field.has-error input, .field.has-error select, .field.has-error textarea { border-color: rgba(248,113,113,0.5); }
     .field.has-error .field-error { display: block; }
 
-    /* ===== NAV BUTTONS ===== */
-    .form-nav {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-top: 2rem;
-      gap: 1rem;
-    }
-    .btn-prev {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 12px 24px;
-      background: transparent;
-      border: 1px solid var(--border);
-      border-radius: 50px;
-      color: var(--text-muted);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.9rem;
-      font-weight: 500;
-      cursor: pointer;
-      transition: border-color 0.2s, color 0.2s;
-    }
+    .form-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 2rem; gap: 1rem; }
+    .btn-prev { display: inline-flex; align-items: center; gap: 6px; padding: 12px 24px; background: transparent; border: 1px solid var(--border); border-radius: 50px; color: var(--text-muted); font-family: 'Space Grotesk', sans-serif; font-size: 0.9rem; font-weight: 500; cursor: pointer; transition: border-color 0.2s, color 0.2s; }
     .btn-prev:hover { border-color: rgba(255,255,255,0.2); color: var(--text); }
     .btn-prev svg { width: 16px; height: 16px; }
-
-    .btn-next, .btn-submit {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 32px;
-      background: linear-gradient(135deg, var(--purple), var(--cyan));
-      color: #fff;
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 50px;
-      cursor: pointer;
-      transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s;
-      box-shadow: 0 4px 30px rgba(124,58,237,0.35);
-    }
-    .btn-next:hover, .btn-submit:hover {
-      opacity: 0.9;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 40px rgba(124,58,237,0.5);
-    }
+    .btn-next, .btn-submit { display: inline-flex; align-items: center; gap: 8px; padding: 14px 32px; background: linear-gradient(135deg, var(--purple), var(--cyan)); color: #fff; font-family: 'Space Grotesk', sans-serif; font-size: 0.95rem; font-weight: 600; border: none; border-radius: 50px; cursor: pointer; transition: opacity 0.2s, transform 0.2s, box-shadow 0.2s; box-shadow: 0 4px 30px rgba(124,58,237,0.35); }
+    .btn-next:hover, .btn-submit:hover { opacity: 0.9; transform: translateY(-2px); box-shadow: 0 8px 40px rgba(124,58,237,0.5); }
     .btn-next svg, .btn-submit svg { width: 16px; height: 16px; }
 
-    /* ===== PAYMENT INFO ===== */
-    .payment-info {
-      display: flex;
-      gap: 1rem;
-      margin-top: 1.5rem;
-    }
-    .payment-card {
-      flex: 1;
-      padding: 1.25rem;
-      border-radius: var(--radius-sm);
-      text-align: center;
-    }
-    .payment-card--30 {
-      background: rgba(124,58,237,0.1);
-      border: 1px solid rgba(124,58,237,0.3);
-    }
-    .payment-card--70 {
-      background: rgba(6,182,212,0.08);
-      border: 1px solid rgba(6,182,212,0.25);
-    }
-    .payment-pct {
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 2rem;
-      font-weight: 700;
-      display: block;
-      margin-bottom: 4px;
-    }
+    .payment-info { display: flex; gap: 1rem; margin-top: 1.5rem; }
+    .payment-card { flex: 1; padding: 1.25rem; border-radius: var(--radius-sm); text-align: center; }
+    .payment-card--30 { background: rgba(124,58,237,0.1); border: 1px solid rgba(124,58,237,0.3); }
+    .payment-card--70 { background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.25); }
+    .payment-pct { font-family: 'JetBrains Mono', monospace; font-size: 2rem; font-weight: 700; display: block; margin-bottom: 4px; }
     .payment-card--30 .payment-pct { color: var(--purple-light); }
     .payment-card--70 .payment-pct { color: var(--cyan); }
     .payment-label { font-size: 0.82rem; color: var(--text-muted); }
 
-    /* ===== SUCCESS ===== */
-    #success {
-      display: none;
-      text-align: center;
-      padding: 4rem 2rem;
-      animation: fadeIn 0.5s ease;
-    }
-    .success-icon {
-      width: 80px; height: 80px;
-      background: rgba(34,197,94,0.1);
-      border: 2px solid rgba(34,197,94,0.3);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 2rem;
-    }
+    #success { display: none; text-align: center; padding: 4rem 2rem; animation: fadeIn 0.5s ease; }
+    .success-icon { width: 80px; height: 80px; background: rgba(34,197,94,0.1); border: 2px solid rgba(34,197,94,0.3); border-radius: 50%; display: flex; align-items: center; justify-content: center; margin: 0 auto 2rem; }
     .success-icon svg { width: 36px; height: 36px; color: #22c55e; }
     #success h2 { font-size: 1.8rem; color: #fff; margin-bottom: 0.75rem; }
     #success p { color: var(--text-muted); max-width: 420px; margin: 0 auto 2rem; }
-    .btn-home {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 14px 28px;
-      background: linear-gradient(135deg, var(--purple), var(--cyan));
-      color: #fff;
-      font-weight: 600;
-      border-radius: 50px;
-      transition: opacity 0.2s;
-    }
+    .btn-home { display: inline-flex; align-items: center; gap: 8px; padding: 14px 28px; background: linear-gradient(135deg, var(--purple), var(--cyan)); color: #fff; font-weight: 600; border-radius: 50px; transition: opacity 0.2s; }
     .btn-home:hover { opacity: 0.85; }
 
-    /* ===== PROGRESS BAR ===== */
-    .progress-bar {
-      height: 3px;
-      background: var(--border);
-      border-radius: 2px;
-      margin-bottom: 2rem;
-      overflow: hidden;
-    }
-    .progress-fill {
-      height: 100%;
-      background: linear-gradient(90deg, var(--purple), var(--cyan));
-      border-radius: 2px;
-      transition: width 0.4s ease;
-    }
+    .progress-bar { height: 3px; background: var(--border); border-radius: 2px; margin-bottom: 2rem; overflow: hidden; }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--purple), var(--cyan)); border-radius: 2px; transition: width 0.4s ease; }
 
     @media (max-width: 600px) {
       .field-row { grid-template-columns: 1fr; }
@@ -429,421 +136,456 @@
 
   <nav>
     <a href="index.html" class="logo">MD<span class="dot">.</span></a>
-    <a href="index.html" class="back-link">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-      Retour au site
-    </a>
+    <div class="nav-right">
+      <button class="lang-toggle" id="langToggle" onclick="switchLang()">EN</button>
+      <a href="index.html" class="back-link">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+        <span data-i18n="q.back">Retour au site</span>
+      </a>
+    </div>
   </nav>
 
   <div class="page">
     <div class="page-header">
-      <span class="page-tag">Devis gratuit — Réponse sous 48h</span>
-      <h1>Parlez-moi de votre <span class="gradient-text">projet</span></h1>
-      <p>Remplissez ce questionnaire pour que je puisse vous établir un devis personnalisé. C'est gratuit et sans engagement.</p>
+      <span class="page-tag" data-i18n="q.page.tag">Devis gratuit — Réponse au plus vite</span>
+      <h1><span data-i18n="q.page.title">Parlez-moi de votre</span> <span class="gradient-text" data-i18n="q.page.title2">projet</span></h1>
+      <p data-i18n="q.page.desc">Remplissez ce questionnaire pour que je puisse vous établir un devis personnalisé. C'est gratuit et sans engagement.</p>
     </div>
 
-    <!-- PROGRESS -->
     <div class="progress-bar">
       <div class="progress-fill" id="progressFill" style="width: 25%"></div>
     </div>
 
-    <!-- STEPS INDICATOR -->
     <div class="steps-indicator">
       <div class="step-dot active" id="sdot-1">
         <div class="dot-circle">1</div>
-        <span class="dot-label">Vous</span>
+        <span class="dot-label" data-i18n="q.step1">Vous</span>
       </div>
       <div class="step-line" id="sline-1"></div>
       <div class="step-dot" id="sdot-2">
         <div class="dot-circle">2</div>
-        <span class="dot-label">Projet</span>
+        <span class="dot-label" data-i18n="q.step2">Projet</span>
       </div>
       <div class="step-line" id="sline-2"></div>
       <div class="step-dot" id="sdot-3">
         <div class="dot-circle">3</div>
-        <span class="dot-label">Détails</span>
+        <span class="dot-label" data-i18n="q.step3">Détails</span>
       </div>
       <div class="step-line" id="sline-3"></div>
       <div class="step-dot" id="sdot-4">
         <div class="dot-circle">4</div>
-        <span class="dot-label">Finaliser</span>
+        <span class="dot-label" data-i18n="q.step4">Finaliser</span>
       </div>
     </div>
 
-    <!-- FORM -->
     <form id="quoteForm" novalidate>
 
-      <!-- STEP 1 : IDENTITÉ -->
+      <!-- STEP 1 -->
       <div class="form-step active" data-step="1">
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            Vos coordonnées
+            <span data-i18n="q.s1.card">Vos coordonnées</span>
           </h2>
           <div class="field-row">
             <div class="field" id="f-prenom">
-              <label>Prénom <span class="req">*</span></label>
-              <input type="text" name="prenom" placeholder="Jean" />
-              <span class="field-error">Ce champ est requis.</span>
+              <label><span data-i18n="q.s1.prenom">Prénom</span> <span class="req">*</span></label>
+              <input type="text" name="prenom" data-i18n-ph="q.s1.prenom.ph" placeholder="Jean" />
+              <span class="field-error" data-i18n="q.err.required">Ce champ est requis.</span>
             </div>
             <div class="field" id="f-nom">
-              <label>Nom <span class="req">*</span></label>
-              <input type="text" name="nom" placeholder="Dupont" />
-              <span class="field-error">Ce champ est requis.</span>
+              <label><span data-i18n="q.s1.nom">Nom</span> <span class="req">*</span></label>
+              <input type="text" name="nom" data-i18n-ph="q.s1.nom.ph" placeholder="Dupont" />
+              <span class="field-error" data-i18n="q.err.required">Ce champ est requis.</span>
             </div>
           </div>
           <div class="field" id="f-email">
             <label>Email <span class="req">*</span></label>
             <input type="email" name="email" placeholder="jean.dupont@email.com" />
-            <span class="field-error">Veuillez entrer un email valide.</span>
+            <span class="field-error" data-i18n="q.err.email">Veuillez entrer un email valide.</span>
           </div>
           <div class="field">
-            <label>Téléphone <span style="color:var(--text-muted); font-weight:400">(facultatif)</span></label>
+            <label><span data-i18n="q.s1.phone">Téléphone</span> <span style="color:var(--text-muted); font-weight:400">(<span data-i18n="q.optional">facultatif</span>)</span></label>
             <input type="tel" name="telephone" placeholder="06 00 00 00 00" />
           </div>
           <div class="field">
-            <label>Votre activité / secteur <span class="req">*</span></label>
-            <input type="text" name="activite" placeholder="Ex : Restaurant, Coach sportif, E-commerce..." id="f-activite-input" />
-            <span class="field-error" id="f-activite-error">Ce champ est requis.</span>
+            <label><span data-i18n="q.s1.activite">Votre activité / secteur</span> <span class="req">*</span></label>
+            <input type="text" name="activite" id="f-activite-input" data-i18n-ph="q.s1.activite.ph" placeholder="Ex : Restaurant, Coach sportif, E-commerce..." />
+            <span class="field-error" id="f-activite-error" data-i18n="q.err.required">Ce champ est requis.</span>
           </div>
         </div>
-
         <div class="form-nav">
           <span></span>
           <button type="button" class="btn-next" onclick="nextStep(1)">
-            Suivant
+            <span data-i18n="q.btn.next">Suivant</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- STEP 2 : PROJET -->
+      <!-- STEP 2 -->
       <div class="form-step" data-step="2">
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
-            Type de projet
+            <span data-i18n="q.s2.type.card">Type de projet</span>
           </h2>
           <div class="field">
-            <label>Quel type de site souhaitez-vous ? <span class="req">*</span></label>
+            <label><span data-i18n="q.s2.type.label">Quel type de site souhaitez-vous ?</span> <span class="req">*</span></label>
             <div class="check-grid" id="typeProjet">
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Site vitrine" />
-                <span>Site vitrine</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Site e-commerce" />
-                <span>Site e-commerce</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Application web" />
-                <span>Application web</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Blog / Portfolio" />
-                <span>Blog / Portfolio</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Refonte de site" />
-                <span>Refonte de site existant</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="type_projet" value="Autre" />
-                <span>Autre</span>
-              </label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Site vitrine" /><span data-i18n="q.s2.t.vitrine">Site vitrine</span></label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Site e-commerce" /><span data-i18n="q.s2.t.ecom">Site e-commerce</span></label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Application web" /><span data-i18n="q.s2.t.app">Application web</span></label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Blog / Portfolio" /><span data-i18n="q.s2.t.blog">Blog / Portfolio</span></label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Refonte de site" /><span data-i18n="q.s2.t.refonte">Refonte de site existant</span></label>
+              <label class="check-item"><input type="radio" name="type_projet" value="Autre" /><span data-i18n="q.s2.t.autre">Autre</span></label>
             </div>
-            <span class="field-error" id="typeProjetError">Veuillez sélectionner une option.</span>
+            <span class="field-error" id="typeProjetError" data-i18n="q.err.select">Veuillez sélectionner une option.</span>
           </div>
         </div>
-
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-            Description du projet
+            <span data-i18n="q.s2.desc.card">Description du projet</span>
           </h2>
           <div class="field" id="f-description">
-            <label>Décrivez votre projet <span class="req">*</span></label>
-            <textarea name="description" placeholder="Ex : Je souhaite un site vitrine pour mon restaurant avec une carte en ligne, un formulaire de réservation et une galerie photos..."></textarea>
-            <span class="field-error">Merci de décrire votre projet.</span>
+            <label><span data-i18n="q.s2.desc.label">Décrivez votre projet</span> <span class="req">*</span></label>
+            <textarea name="description" data-i18n-ph="q.s2.desc.ph" placeholder="Ex : Je souhaite un site vitrine pour mon restaurant avec une carte en ligne..."></textarea>
+            <span class="field-error" data-i18n="q.err.desc">Merci de décrire votre projet.</span>
           </div>
         </div>
-
         <div class="form-nav">
           <button type="button" class="btn-prev" onclick="prevStep(2)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour
+            <span data-i18n="q.btn.prev">Retour</span>
           </button>
           <button type="button" class="btn-next" onclick="nextStep(2)">
-            Suivant
+            <span data-i18n="q.btn.next">Suivant</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- STEP 3 : DÉTAILS -->
+      <!-- STEP 3 -->
       <div class="form-step" data-step="3">
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
-            Fonctionnalités souhaitées
+            <span data-i18n="q.s3.feat.card">Fonctionnalités souhaitées</span>
           </h2>
           <div class="field">
-            <label>Cochez tout ce qui vous intéresse</label>
+            <label data-i18n="q.s3.feat.label">Cochez tout ce qui vous intéresse</label>
             <div class="check-grid">
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Formulaire de contact" />
-                <span>Formulaire de contact</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Blog / actualités" />
-                <span>Blog / actualités</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Espace membre / login" />
-                <span>Espace membre / login</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Paiement en ligne" />
-                <span>Paiement en ligne</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Galerie photos / portfolio" />
-                <span>Galerie photos / portfolio</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Multilingue" />
-                <span>Multilingue</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Réservation en ligne" />
-                <span>Réservation en ligne</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Chat / support" />
-                <span>Chat / support</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Tableau de bord admin" />
-                <span>Tableau de bord admin</span>
-              </label>
-              <label class="check-item">
-                <input type="checkbox" name="features" value="Carte Google Maps" />
-                <span>Carte Google Maps</span>
-              </label>
+              <label class="check-item"><input type="checkbox" name="features" value="Formulaire de contact" /><span data-i18n="q.s3.f.contact">Formulaire de contact</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Blog / actualités" /><span data-i18n="q.s3.f.blog">Blog / actualités</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Espace membre / login" /><span data-i18n="q.s3.f.member">Espace membre / login</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Paiement en ligne" /><span data-i18n="q.s3.f.payment">Paiement en ligne</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Galerie photos / portfolio" /><span data-i18n="q.s3.f.gallery">Galerie photos / portfolio</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Multilingue" /><span data-i18n="q.s3.f.multi">Multilingue</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Réservation en ligne" /><span data-i18n="q.s3.f.booking">Réservation en ligne</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Chat / support" /><span data-i18n="q.s3.f.chat">Chat / support</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Tableau de bord admin" /><span data-i18n="q.s3.f.admin">Tableau de bord admin</span></label>
+              <label class="check-item"><input type="checkbox" name="features" value="Carte Google Maps" /><span data-i18n="q.s3.f.map">Carte Google Maps</span></label>
             </div>
           </div>
         </div>
-
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-            Bon à savoir
+            <span data-i18n="q.s3.info.card">Bon à savoir</span>
           </h2>
-          <div style="display:flex; flex-direction:column; gap:0.75rem;">
-            <div style="display:flex; align-items:flex-start; gap:12px; padding:1rem 1.25rem; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.25); border-radius:10px;">
-              <svg style="flex-shrink:0;margin-top:2px;color:#a855f7;width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-              <div>
-                <p style="color:#fff; font-weight:600; margin-bottom:4px; font-size:0.92rem;">Un seul projet à la fois</p>
-                <p style="font-size:0.85rem; margin:0;">Je ne prends qu'un seul contrat à la fois. Cela me permet de me consacrer entièrement à votre projet et de vous livrer un travail de qualité, sans précipitation.</p>
-              </div>
+          <div style="display:flex; align-items:flex-start; gap:12px; padding:1rem 1.25rem; background:rgba(124,58,237,0.08); border:1px solid rgba(124,58,237,0.25); border-radius:10px;">
+            <svg style="flex-shrink:0;margin-top:2px;color:#a855f7;width:20px;height:20px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            <div>
+              <p style="color:#fff; font-weight:600; margin-bottom:4px; font-size:0.92rem;" data-i18n="q.s3.info.title">Un seul projet à la fois</p>
+              <p style="font-size:0.85rem; margin:0;" data-i18n="q.s3.info.desc">Je ne prends qu'un seul contrat à la fois. Cela me permet de me consacrer entièrement à votre projet et de vous livrer un travail de qualité, sans précipitation.</p>
             </div>
           </div>
           <div class="field" style="margin-top:1.25rem; margin-bottom:0;">
-            <label>Avez-vous déjà une adresse de site web (domaine) ?</label>
+            <label data-i18n="q.s3.domaine.label">Avez-vous déjà une adresse de site web (domaine) ?</label>
             <div class="check-grid" style="grid-template-columns: repeat(3, 1fr);">
-              <label class="check-item">
-                <input type="radio" name="domaine" value="Oui" />
-                <span>Oui</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="domaine" value="Non" />
-                <span>Non</span>
-              </label>
-              <label class="check-item">
-                <input type="radio" name="domaine" value="Je ne sais pas" />
-                <span>Je ne sais pas</span>
-              </label>
+              <label class="check-item"><input type="radio" name="domaine" value="Oui" /><span data-i18n="q.s3.domaine.oui">Oui</span></label>
+              <label class="check-item"><input type="radio" name="domaine" value="Non" /><span data-i18n="q.s3.domaine.non">Non</span></label>
+              <label class="check-item"><input type="radio" name="domaine" value="Je ne sais pas" /><span data-i18n="q.s3.domaine.idk">Je ne sais pas</span></label>
             </div>
           </div>
         </div>
-
         <div class="form-nav">
           <button type="button" class="btn-prev" onclick="prevStep(3)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour
+            <span data-i18n="q.btn.prev">Retour</span>
           </button>
           <button type="button" class="btn-next" onclick="nextStep(3)">
-            Suivant
+            <span data-i18n="q.btn.next">Suivant</span>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
           </button>
         </div>
       </div>
 
-      <!-- STEP 4 : FINALISER -->
+      <!-- STEP 4 -->
       <div class="form-step" data-step="4">
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
-            Informations supplémentaires
+            <span data-i18n="q.s4.extras.card">Informations supplémentaires</span>
           </h2>
           <div class="field">
-            <label>Des sites qui vous plaisent / inspirations ?</label>
-            <textarea name="inspirations" placeholder="Collez des liens ou décrivez un style qui vous plaît..." style="min-height: 90px;"></textarea>
-            <p class="field-hint">Facultatif, mais très utile pour le design.</p>
+            <label data-i18n="q.s4.inspi.label">Des sites qui vous plaisent / inspirations ?</label>
+            <textarea name="inspirations" data-i18n-ph="q.s4.inspi.ph" placeholder="Collez des liens ou décrivez un style qui vous plaît..." style="min-height: 90px;"></textarea>
+            <p class="field-hint" data-i18n="q.s4.inspi.hint">Facultatif, mais très utile pour le design.</p>
           </div>
           <div class="field">
-            <label>Avez-vous d'autres informations à ajouter ?</label>
-            <textarea name="autres" placeholder="Tout ce qui pourrait m'aider à mieux comprendre votre projet..." style="min-height: 90px;"></textarea>
+            <label data-i18n="q.s4.autres.label">Avez-vous d'autres informations à ajouter ?</label>
+            <textarea name="autres" data-i18n-ph="q.s4.autres.ph" placeholder="Tout ce qui pourrait m'aider à mieux comprendre votre projet..." style="min-height: 90px;"></textarea>
           </div>
           <div class="field">
-            <label>Comment avez-vous entendu parler de moi ?</label>
+            <label data-i18n="q.s4.source.label">Comment avez-vous entendu parler de moi ?</label>
             <select name="source">
-              <option value="" disabled selected>Choisir...</option>
-              <option value="Bouche à oreille">Bouche à oreille</option>
-              <option value="Réseaux sociaux">Réseaux sociaux</option>
-              <option value="Recherche Google">Recherche Google</option>
-              <option value="Recommandation">Recommandation d'un ami / collègue</option>
-              <option value="Autre">Autre</option>
+              <option value="" disabled selected data-i18n="q.s4.source.default">Choisir...</option>
+              <option value="Bouche à oreille" data-i18n="q.s4.source.word">Bouche à oreille</option>
+              <option value="Réseaux sociaux" data-i18n="q.s4.source.social">Réseaux sociaux</option>
+              <option value="Recherche Google" data-i18n="q.s4.source.google">Recherche Google</option>
+              <option value="Recommandation" data-i18n="q.s4.source.reco">Recommandation d'un ami / collègue</option>
+              <option value="Autre" data-i18n="q.s4.source.autre">Autre</option>
             </select>
           </div>
         </div>
-
-        <!-- MODALITÉ DE PAIEMENT -->
         <div class="form-card">
           <h2>
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
-            Modalité de paiement
+            <span data-i18n="q.pay.card">Modalité de paiement</span>
           </h2>
-          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0">En acceptant le devis, vous confirmez avoir pris connaissance des conditions de paiement suivantes :</p>
+          <p style="font-size:0.9rem; color:var(--text-muted); margin-bottom:0" data-i18n="q.pay.desc">En acceptant le devis, vous confirmez avoir pris connaissance des conditions de paiement suivantes :</p>
           <div class="payment-info">
             <div class="payment-card payment-card--30">
               <span class="payment-pct">30%</span>
-              <span class="payment-label">Acompte au démarrage du projet</span>
+              <span class="payment-label" data-i18n="q.pay.30">Acompte au démarrage du projet</span>
             </div>
             <div class="payment-card payment-card--70">
               <span class="payment-pct">70%</span>
-              <span class="payment-label">Solde à la livraison du site</span>
+              <span class="payment-label" data-i18n="q.pay.70">Solde à la livraison du site</span>
             </div>
           </div>
         </div>
-
         <div class="form-nav">
           <button type="button" class="btn-prev" onclick="prevStep(4)">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 5l-7 7 7 7"/></svg>
-            Retour
+            <span data-i18n="q.btn.prev">Retour</span>
           </button>
           <button type="submit" class="btn-submit">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
-            Envoyer ma demande
+            <span data-i18n="q.btn.submit">Envoyer ma demande</span>
           </button>
         </div>
       </div>
 
     </form>
 
-    <!-- SUCCESS -->
     <div id="success">
       <div class="success-icon">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
       </div>
-      <h2>Demande envoyée !</h2>
-      <p>Merci pour votre confiance. Je lis votre questionnaire et vous réponds avec un devis sous <strong>48h</strong>.</p>
+      <h2 data-i18n="q.success.title">Demande envoyée !</h2>
+      <p data-i18n="q.success.desc">Merci pour votre confiance. Je lis votre questionnaire et vous réponds avec un devis au plus vite.</p>
       <a href="index.html" class="btn-home">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:16px;height:16px;"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        Retour à l'accueil
+        <span data-i18n="q.success.home">Retour à l'accueil</span>
       </a>
     </div>
-
   </div>
 
   <script>
-    // ---- STEP NAVIGATION ----
+    // ===== TRANSLATIONS =====
+    const qTr = {
+      fr: {
+        'q.back': 'Retour au site',
+        'q.page.tag': 'Devis gratuit — Réponse au plus vite',
+        'q.page.title': 'Parlez-moi de votre',
+        'q.page.title2': 'projet',
+        'q.page.desc': 'Remplissez ce questionnaire pour que je puisse vous établir un devis personnalisé. C\'est gratuit et sans engagement.',
+        'q.step1': 'Vous', 'q.step2': 'Projet', 'q.step3': 'Détails', 'q.step4': 'Finaliser',
+        'q.s1.card': 'Vos coordonnées',
+        'q.s1.prenom': 'Prénom', 'q.s1.prenom.ph': 'Jean',
+        'q.s1.nom': 'Nom', 'q.s1.nom.ph': 'Dupont',
+        'q.s1.phone': 'Téléphone',
+        'q.optional': 'facultatif',
+        'q.s1.activite': 'Votre activité / secteur',
+        'q.s1.activite.ph': 'Ex : Restaurant, Coach sportif, E-commerce...',
+        'q.err.required': 'Ce champ est requis.',
+        'q.err.email': 'Veuillez entrer un email valide.',
+        'q.err.select': 'Veuillez sélectionner une option.',
+        'q.err.desc': 'Merci de décrire votre projet.',
+        'q.btn.next': 'Suivant', 'q.btn.prev': 'Retour', 'q.btn.submit': 'Envoyer ma demande',
+        'q.s2.type.card': 'Type de projet',
+        'q.s2.type.label': 'Quel type de site souhaitez-vous ?',
+        'q.s2.t.vitrine': 'Site vitrine', 'q.s2.t.ecom': 'Site e-commerce',
+        'q.s2.t.app': 'Application web', 'q.s2.t.blog': 'Blog / Portfolio',
+        'q.s2.t.refonte': 'Refonte de site existant', 'q.s2.t.autre': 'Autre',
+        'q.s2.desc.card': 'Description du projet',
+        'q.s2.desc.label': 'Décrivez votre projet',
+        'q.s2.desc.ph': 'Ex : Je souhaite un site vitrine pour mon restaurant avec une carte en ligne, un formulaire de réservation et une galerie photos...',
+        'q.s3.feat.card': 'Fonctionnalités souhaitées',
+        'q.s3.feat.label': 'Cochez tout ce qui vous intéresse',
+        'q.s3.f.contact': 'Formulaire de contact', 'q.s3.f.blog': 'Blog / actualités',
+        'q.s3.f.member': 'Espace membre / login', 'q.s3.f.payment': 'Paiement en ligne',
+        'q.s3.f.gallery': 'Galerie photos / portfolio', 'q.s3.f.multi': 'Multilingue',
+        'q.s3.f.booking': 'Réservation en ligne', 'q.s3.f.chat': 'Chat / support',
+        'q.s3.f.admin': 'Tableau de bord admin', 'q.s3.f.map': 'Carte Google Maps',
+        'q.s3.info.card': 'Bon à savoir',
+        'q.s3.info.title': 'Un seul projet à la fois',
+        'q.s3.info.desc': 'Je ne prends qu\'un seul contrat à la fois. Cela me permet de me consacrer entièrement à votre projet et de vous livrer un travail de qualité, sans précipitation.',
+        'q.s3.domaine.label': 'Avez-vous déjà une adresse de site web (domaine) ?',
+        'q.s3.domaine.oui': 'Oui', 'q.s3.domaine.non': 'Non', 'q.s3.domaine.idk': 'Je ne sais pas',
+        'q.s4.extras.card': 'Informations supplémentaires',
+        'q.s4.inspi.label': 'Des sites qui vous plaisent / inspirations ?',
+        'q.s4.inspi.ph': 'Collez des liens ou décrivez un style qui vous plaît...',
+        'q.s4.inspi.hint': 'Facultatif, mais très utile pour le design.',
+        'q.s4.autres.label': 'Avez-vous d\'autres informations à ajouter ?',
+        'q.s4.autres.ph': 'Tout ce qui pourrait m\'aider à mieux comprendre votre projet...',
+        'q.s4.source.label': 'Comment avez-vous entendu parler de moi ?',
+        'q.s4.source.default': 'Choisir...', 'q.s4.source.word': 'Bouche à oreille',
+        'q.s4.source.social': 'Réseaux sociaux', 'q.s4.source.google': 'Recherche Google',
+        'q.s4.source.reco': 'Recommandation d\'un ami / collègue', 'q.s4.source.autre': 'Autre',
+        'q.pay.card': 'Modalité de paiement',
+        'q.pay.desc': 'En acceptant le devis, vous confirmez avoir pris connaissance des conditions de paiement suivantes :',
+        'q.pay.30': 'Acompte au démarrage du projet',
+        'q.pay.70': 'Solde à la livraison du site',
+        'q.success.title': 'Demande envoyée !',
+        'q.success.desc': 'Merci pour votre confiance. Je lis votre questionnaire et vous réponds avec un devis au plus vite.',
+        'q.success.home': 'Retour à l\'accueil',
+      },
+      en: {
+        'q.back': 'Back to site',
+        'q.page.tag': 'Free quote — Quick response',
+        'q.page.title': 'Tell me about your',
+        'q.page.title2': 'project',
+        'q.page.desc': 'Fill out this questionnaire so I can put together a personalised quote. It\'s free and non-binding.',
+        'q.step1': 'You', 'q.step2': 'Project', 'q.step3': 'Details', 'q.step4': 'Finalise',
+        'q.s1.card': 'Your details',
+        'q.s1.prenom': 'First name', 'q.s1.prenom.ph': 'John',
+        'q.s1.nom': 'Last name', 'q.s1.nom.ph': 'Smith',
+        'q.s1.phone': 'Phone',
+        'q.optional': 'optional',
+        'q.s1.activite': 'Your business / sector',
+        'q.s1.activite.ph': 'e.g. Restaurant, Personal trainer, E-commerce...',
+        'q.err.required': 'This field is required.',
+        'q.err.email': 'Please enter a valid email address.',
+        'q.err.select': 'Please select an option.',
+        'q.err.desc': 'Please describe your project.',
+        'q.btn.next': 'Next', 'q.btn.prev': 'Back', 'q.btn.submit': 'Send my request',
+        'q.s2.type.card': 'Project type',
+        'q.s2.type.label': 'What type of website do you need?',
+        'q.s2.t.vitrine': 'Showcase website', 'q.s2.t.ecom': 'E-commerce website',
+        'q.s2.t.app': 'Web application', 'q.s2.t.blog': 'Blog / Portfolio',
+        'q.s2.t.refonte': 'Redesign existing site', 'q.s2.t.autre': 'Other',
+        'q.s2.desc.card': 'Project description',
+        'q.s2.desc.label': 'Describe your project',
+        'q.s2.desc.ph': 'e.g. I need a showcase website for my restaurant with an online menu, a booking form and a photo gallery...',
+        'q.s3.feat.card': 'Desired features',
+        'q.s3.feat.label': 'Check all that apply',
+        'q.s3.f.contact': 'Contact form', 'q.s3.f.blog': 'Blog / news',
+        'q.s3.f.member': 'Member area / login', 'q.s3.f.payment': 'Online payment',
+        'q.s3.f.gallery': 'Photo gallery / portfolio', 'q.s3.f.multi': 'Multilingual',
+        'q.s3.f.booking': 'Online booking', 'q.s3.f.chat': 'Chat / support',
+        'q.s3.f.admin': 'Admin dashboard', 'q.s3.f.map': 'Google Maps',
+        'q.s3.info.card': 'Good to know',
+        'q.s3.info.title': 'One project at a time',
+        'q.s3.info.desc': 'I only take one contract at a time. This allows me to focus entirely on your project and deliver quality work, without rushing.',
+        'q.s3.domaine.label': 'Do you already have a website address (domain)?',
+        'q.s3.domaine.oui': 'Yes', 'q.s3.domaine.non': 'No', 'q.s3.domaine.idk': 'I don\'t know',
+        'q.s4.extras.card': 'Additional information',
+        'q.s4.inspi.label': 'Websites you like / inspirations?',
+        'q.s4.inspi.ph': 'Paste links or describe a style you like...',
+        'q.s4.inspi.hint': 'Optional, but very helpful for the design.',
+        'q.s4.autres.label': 'Any other information to add?',
+        'q.s4.autres.ph': 'Anything that might help me better understand your project...',
+        'q.s4.source.label': 'How did you hear about me?',
+        'q.s4.source.default': 'Choose...', 'q.s4.source.word': 'Word of mouth',
+        'q.s4.source.social': 'Social media', 'q.s4.source.google': 'Google search',
+        'q.s4.source.reco': 'Friend / colleague recommendation', 'q.s4.source.autre': 'Other',
+        'q.pay.card': 'Payment terms',
+        'q.pay.desc': 'By accepting the quote, you confirm that you have read the following payment terms:',
+        'q.pay.30': 'Deposit at project start',
+        'q.pay.70': 'Balance upon site delivery',
+        'q.success.title': 'Request sent!',
+        'q.success.desc': 'Thank you for your trust. I\'ll review your questionnaire and get back to you with a quote as soon as possible.',
+        'q.success.home': 'Back to home',
+      }
+    };
+
+    // ===== LANG =====
+    let currentLang = localStorage.getItem('lang') || 'fr';
+
+    function applyLang(lang) {
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (qTr[lang] && qTr[lang][key] !== undefined) el.innerHTML = qTr[lang][key];
+      });
+      document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+        const key = el.getAttribute('data-i18n-ph');
+        if (qTr[lang] && qTr[lang][key]) el.placeholder = qTr[lang][key];
+      });
+      document.documentElement.lang = lang;
+      const btn = document.getElementById('langToggle');
+      if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+      localStorage.setItem('lang', lang);
+      currentLang = lang;
+    }
+
+    function switchLang() { applyLang(currentLang === 'fr' ? 'en' : 'fr'); }
+
+    // ===== STEP NAVIGATION =====
     let currentStep = 1;
     const totalSteps = 4;
 
     function updateUI(step) {
-      // Show correct form step
       document.querySelectorAll('.form-step').forEach(s => s.classList.remove('active'));
       const active = document.querySelector(`[data-step="${step}"]`);
       if (active) active.classList.add('active');
-
-      // Progress bar
       document.getElementById('progressFill').style.width = (step / totalSteps * 100) + '%';
-
-      // Step dots
       for (let i = 1; i <= totalSteps; i++) {
         const dot = document.getElementById(`sdot-${i}`);
         dot.classList.remove('active', 'done');
         if (i < step) dot.classList.add('done');
         else if (i === step) dot.classList.add('active');
       }
-      // Step lines
       for (let i = 1; i < totalSteps; i++) {
         const line = document.getElementById(`sline-${i}`);
         if (line) line.classList.toggle('done', i < step);
       }
-
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     function validateStep(step) {
       let valid = true;
+      const lang = currentLang;
 
       if (step === 1) {
         ['prenom', 'nom'].forEach(name => {
           const field = document.querySelector(`input[name="${name}"]`);
           const wrapper = field.closest('.field');
-          if (!field.value.trim()) {
-            wrapper.classList.add('has-error');
-            valid = false;
-          } else {
-            wrapper.classList.remove('has-error');
-          }
+          wrapper.classList.toggle('has-error', !field.value.trim());
+          if (!field.value.trim()) valid = false;
         });
-
         const email = document.querySelector('input[name="email"]');
-        const emailWrapper = email.closest('.field');
-        const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
-        if (!emailValid) {
-          emailWrapper.classList.add('has-error');
-          valid = false;
-        } else {
-          emailWrapper.classList.remove('has-error');
-        }
-
+        const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim());
+        email.closest('.field').classList.toggle('has-error', !emailOk);
+        if (!emailOk) valid = false;
         const activite = document.querySelector('input[name="activite"]');
-        const activiteWrapper = document.getElementById('f-activite-input').closest('.field');
-        if (!activite.value.trim()) {
-          activiteWrapper.classList.add('has-error');
-          document.getElementById('f-activite-error').style.display = 'block';
-          valid = false;
-        } else {
-          activiteWrapper.classList.remove('has-error');
-          document.getElementById('f-activite-error').style.display = 'none';
-        }
+        const activiteWrapper = activite.closest('.field');
+        activiteWrapper.classList.toggle('has-error', !activite.value.trim());
+        document.getElementById('f-activite-error').style.display = activite.value.trim() ? 'none' : 'block';
+        if (!activite.value.trim()) valid = false;
       }
 
       if (step === 2) {
         const typeSelected = document.querySelector('input[name="type_projet"]:checked');
-        const typeError = document.getElementById('typeProjetError');
-        if (!typeSelected) {
-          typeError.style.display = 'block';
-          valid = false;
-        } else {
-          typeError.style.display = 'none';
-        }
-
+        document.getElementById('typeProjetError').style.display = typeSelected ? 'none' : 'block';
+        if (!typeSelected) valid = false;
         const desc = document.querySelector('textarea[name="description"]');
-        const descWrapper = desc.closest('.field');
-        if (!desc.value.trim()) {
-          descWrapper.classList.add('has-error');
-          valid = false;
-        } else {
-          descWrapper.classList.remove('has-error');
-        }
+        desc.closest('.field').classList.toggle('has-error', !desc.value.trim());
+        if (!desc.value.trim()) valid = false;
       }
-
-      // step 3 : no required fields
 
       return valid;
     }
@@ -859,14 +601,11 @@
       updateUI(currentStep);
     }
 
-    // ---- FORM SUBMIT ----
+    // ===== FORM SUBMIT =====
     document.getElementById('quoteForm').addEventListener('submit', function(e) {
       e.preventDefault();
-
       const data = new FormData(this);
       const features = [...document.querySelectorAll('input[name="features"]:checked')].map(i => i.value);
-
-      // Build email body
       const body = [
         `Prénom : ${data.get('prenom')}`,
         `Nom : ${data.get('nom')}`,
@@ -877,26 +616,23 @@
         `Type de projet : ${data.get('type_projet')}`,
         `Description : ${data.get('description')}`,
         ``,
-        `Fonctionnalités : ${features.length ? features.join(', ') : 'Aucune sélectionnée'}`,
+        `Fonctionnalités : ${features.length ? features.join(', ') : 'Aucune'}`,
         `Domaine existant : ${data.get('domaine') || 'Non renseigné'}`,
         ``,
         `Inspirations : ${data.get('inspirations') || 'Non renseigné'}`,
         `Autres infos : ${data.get('autres') || 'Non renseigné'}`,
         `Source : ${data.get('source') || 'Non renseigné'}`,
       ].join('\n');
-
-      const subject = encodeURIComponent(`[Devis] Nouveau projet - ${data.get('prenom')} ${data.get('nom')}`);
-      const bodyEncoded = encodeURIComponent(body);
-
-      // Open mailto
-      window.location.href = `mailto:maeldufour408@gmail.com?subject=${subject}&body=${bodyEncoded}`;
-
-      // Show success
+      const subject = encodeURIComponent(`[Devis] ${data.get('prenom')} ${data.get('nom')}`);
+      window.location.href = `mailto:maeldufour408@gmail.com?subject=${subject}&body=${encodeURIComponent(body)}`;
       document.getElementById('quoteForm').style.display = 'none';
       document.querySelector('.steps-indicator').style.display = 'none';
       document.querySelector('.progress-bar').style.display = 'none';
       document.getElementById('success').style.display = 'block';
     });
+
+    // ===== INIT =====
+    applyLang(currentLang);
   </script>
 
 </body>
