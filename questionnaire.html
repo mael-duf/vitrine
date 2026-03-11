@@ -137,7 +137,7 @@
   <nav>
     <a href="index.html" class="logo">MD<span class="dot">.</span></a>
     <div class="nav-right">
-      <button class="lang-toggle" id="langToggle" onclick="switchLang()">EN</button>
+      <button class="lang-toggle" id="langToggle" onclick="switchLang()"><span data-lang="en">EN</span> / <span data-lang="fr">FR</span></button>
       <a href="index.html" class="back-link">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
         <span data-i18n="q.back">Retour au site</span>
@@ -526,8 +526,9 @@
         if (qTr[lang] && qTr[lang][key]) el.placeholder = qTr[lang][key];
       });
       document.documentElement.lang = lang;
-      const btn = document.getElementById('langToggle');
-      if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+      document.querySelectorAll('#langToggle [data-lang]').forEach(s => {
+        s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+      });
       localStorage.setItem('lang', lang);
       currentLang = lang;
     }

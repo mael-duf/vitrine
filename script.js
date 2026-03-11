@@ -160,8 +160,9 @@ function applyLang(lang) {
     }
   });
   document.documentElement.lang = lang;
-  const btn = document.getElementById('langToggle');
-  if (btn) btn.textContent = lang === 'fr' ? 'EN' : 'FR';
+  document.querySelectorAll('#langToggle [data-lang]').forEach(s => {
+    s.classList.toggle('active', s.getAttribute('data-lang') === lang);
+  });
   localStorage.setItem('lang', lang);
   currentLang = lang;
 }
